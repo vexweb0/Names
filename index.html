@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Picker</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', print, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://t4.ftcdn.net/jpg/02/10/73/39/240_F_210733963_stIjhFeI7D6odexhOrdhvOW4GODS842r.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .name-picker {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #ff6347;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e53e3e;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #random-name, #name-list {
+            flex: 1;
+        }
+
+        #name-list {
+            display: none;
+        }
+
+        #confirm-x {
+            width: 50px;
+            height: 50px;
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #confirm-x:hover {
+            background-color: #0097a7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="name-picker">
+    <h2>Name Picker</h2>
+
+    <div>
+        <label for="names">Enter Names (comma-separated):</label>
+        <input type="text" id="names" placeholder="Enter names">
+    </div>
+
+    <label for="pick-option">Pick Option:</label>
+    <select id="pick-option">
+        <option value="1">Pick 1 Random Name</option>
+        <option value="2">Name All</option>
+    </select>
+
+    <button onclick="pickNames()">Pick Names</button>
+
+    <div class="result-box">
+        <div id="random-name">
+            <!-- Randomly picked name will be displayed here -->
+        </div>
+
+        <div id="name-list">
+            <!-- List of all names will be displayed here -->
+        </div>
+    </div>
+
+    <button id="confirm-x" onclick="confirmSelection()">✓</button>
+</div>
+
+<script>
+    let namesArray = [];
+
+    function pickNames() {
+        const namesInput = document.getElementById('names').value;
+        namesArray = namesInput.split(',').map(name => name.trim());
+
+        const pickOption = document.getElementById('pick-option').value;
+        const randomNameBox = document.getElementById('random-name');
+        const nameListBox = document.getElementById('name-list');
+
+        randomNameBox.innerHTML = '';
+        nameListBox.innerHTML = '';
+
+        if (pickOption === '1') {
+            const randomIndex = Math.floor(Math.random() * namesArray.length);
+            const randomName = namesArray[randomIndex];
+            randomNameBox.innerHTML = `<p>${randomName}</p>`;
+            nameListBox.style.display = 'none';
+            randomNameBox.style.display = 'block';
+        } else if (pickOption === '2') {
+            const namesListHTML = namesArray.map(name => `<p>${name}</p>`).join('');
+            nameListBox.innerHTML = namesListHTML;
+            randomNameBox.style.display = 'none';
+            nameListBox.style.display = 'block';
+        }
+    }
+
+    function confirmSelection() {
+        // You can implement your confirmation logic here
+        // For now, let's just log to the console
+        console.log('Selection Confirmed!');
+    }
+</script>
+
+</body>
+</html>
